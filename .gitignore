@@ -6,3 +6,4 @@ build/
 .vagrant
 .idea
 .gradle
+*.jar

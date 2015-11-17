@@ -21,5 +21,15 @@ task run(type: JavaExec, dependsOn: classes) {
     main = 'AppMain'
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
+    args '-Dspark.master=local[2]', ''
 }
 
+task distlib(type: Copy) {
+  into "build/distlib"
+  from configurations.runtime
+}
+
+task distlibtest(type: Copy) {
+  into "build/distlibtest"
+  from configurations.testRuntime - configurations.runtime
+}

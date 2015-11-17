@@ -19,4 +19,5 @@ ln -fs /usr/local/kafka_2.11-0.8.2.2/ /usr/local/kafka
 echo "export JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64'" > /etc/profile.d/jdk.sh
 chmod +x /etc/profile.d/jdk.sh
 
+su - vagrant -c 'echo -e  "y\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa'
 cat /home/vagrant/.ssh/id_rsa.pub > .ssh/authorized_keys
