@@ -2,7 +2,7 @@
 cd /tmp
 
 apt-get update
-apt-get install openjdk-7-jdk -y
+apt-get install openjdk-7-jdk -y python-pip
 
 curl -O "http://d3kbcqa49mib13.cloudfront.net/spark-1.5.2-bin-hadoop2.6.tgz"
 curl -O "http://www.gtlib.gatech.edu/pub/apache/hadoop/common/hadoop-2.6.2/hadoop-2.6.2.tar.gz"
@@ -21,3 +21,5 @@ chmod +x /etc/profile.d/jdk.sh
 
 su - vagrant -c 'echo -e  "y\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa'
 cat /home/vagrant/.ssh/id_rsa.pub > .ssh/authorized_keys
+
+pip install kafka-python

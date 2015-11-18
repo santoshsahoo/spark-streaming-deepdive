@@ -5,19 +5,21 @@ import org.apache.spark.streaming.{ Seconds, StreamingContext }
 
 object AppMain {
   def main(args: Array[String]) {
+    val (broker, topic) = (args(0), args(1))
 
-    val conf = new SparkConf().setAppName("demoapp").setMaster("local[*]")
+    val conf = new SparkConf().setAppName("demoapp")
     val sc = new SparkContext(conf)
     val ssc = new StreamingContext(sc, Seconds(2))
 
-    val kafkaConfig = Map("metadata.broker.list" -> "localhost:9092")
-    val topics = Set("topic1")
+    val kafkaConfig = Map("metadata.broker.list" -> broker)
+    val topics = topic.split(",").toSet
 
     val wordstream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaConfig, topics)
-    val pairs = wordstream.map(word => (word, 1))
+    val pairs = wordstream.map(entry => (entry._1, 1))
     val wordCounts = pairs.reduceByKey(_ + _)
+    val trend  = wordCounts.transform(rdd => rdd.sortBy(_._2, false))
 
-    wordCounts.print()
+    trend.print()
 
     ssc.start()
     ssc.awaitTermination()

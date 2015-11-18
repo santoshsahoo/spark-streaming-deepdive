@@ -21,7 +21,7 @@ task run(type: JavaExec, dependsOn: classes) {
     main = 'AppMain'
     classpath sourceSets.main.runtimeClasspath
     classpath configurations.runtime
-    args '-Dspark.master=local[2]', ''
+    args 'localhost:9092', 'topic1'
 }
 
 task distlib(type: Copy) {
