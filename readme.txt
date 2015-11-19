@@ -11,3 +11,9 @@ spark-submit --class AppMain --master local[2] --jars $(cat distlib.txt) \
   ./build/libs/myproject.jar 'localhost:9092', 'topic1'
 
 kafka-console-consumer.sh --zookeeper "localhost:2181" --topic topic1
+
+spark-submit --class AppMain \
+	--master local[2] \
+	--jars $(cat distlib.txt)   \
+	./build/libs/myproject.jar \
+	'localhost:9092', 'topic1'
